@@ -1,41 +1,69 @@
-const timerDisplay = document.getElementById('timer');
-const startButton = document.getElementById('start');
+// variables
 
-let timer;
-let isTimerRunning = false;
-let timeLeft = 1500; // 25 minutes in seconds
+let workTittle = document.getElementById('work');
+let breakTittle = document.getElementById('break');
 
-function startTimer() {
-  if (!isTimerRunning) {
-    isTimerRunning = true;
-    timer = setInterval(updateTime, 1000);
-    startButton.textContent = 'Pause';
-  } else {
-    clearInterval(timer);
-    isTimerRunning = false;
-    startButton.textContent = 'Resume';
-  }
+let workTime = 25;
+let breakTime = 5;
+
+let seconds = "00"
+
+// display
+window.onload = () => {
+    document.getElementById('minutes').innerHTML = workTime;
+    document.getElementById('seconds').innerHTML = seconds;
+
+    workTittle.classList.add('active');
 }
 
-function updateTime() {
-  const minutes = Math.floor(timeLeft / 60);
-  const seconds = timeLeft % 60;
+// start timer
+function start() {
+    // change button
+    document.getElementById('start').style.display = "none";
+    document.getElementById('reset').style.display = "block";
 
-  timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  if (timeLeft === 0) {
-    clearInterval(timer);
-    isTimerRunning = false;
-    startButton.textContent = 'Start';
-    updateNotionDatabase();
-  } else {
-    timeLeft--;
-  }
+    // change the time
+    seconds = 59;
+
+    let workMinutes = workTime - 1;
+    let breakMinutes = breakTime - 1;
+
+    breakCount = 0;
+
+    // countdown
+    let timerFunction = () => {
+        //change the display
+        document.getElementById('minutes').innerHTML = workMinutes;
+        document.getElementById('seconds').innerHTML = seconds;
+
+        // start
+        seconds = seconds - 1;
+
+        if(seconds === 0) {
+            workMinutes = workMinutes - 1;
+            if(workMinutes === -1 ){
+                if(breakCount % 2 === 0) {
+                    // start break
+                    workMinutes = breakMinutes;
+                    breakCount++
+
+                    // change the painel
+                    workTittle.classList.remove('active');
+                    breakTittle.classList.add('active');
+                }else {
+                    // continue work
+                    workMinutes = workTime;
+                    breakCount++
+
+                    // change the painel
+                    breakTittle.classList.remove('active');
+                    workTittle.classList.add('active');
+                }
+            }
+            seconds = 59;
+        }
+    }
+
+    // start countdown
+    setInterval(timerFunction, 1000); // 1000 = 1s
 }
-
-function updateNotionDatabase() {
-  // Replace this with your Notion API code to update the database
-  // Example: Send an HTTP request to your Notion API endpoint
-  console.log('Updating Notion database...');
-}
-
-startButton.addEventListener('click', startTimer);
