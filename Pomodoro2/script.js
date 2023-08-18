@@ -57,8 +57,7 @@ function timerFunction() {
         if (workTime > 0 || breakTime > 0) {
             seconds = 59;
 
-            let minutes = document.getElementById('minutes').innerHTML;
-            minutes = parseInt(minutes);
+            let minutes = parseInt(document.getElementById('minutes').innerHTML);
 
             if (minutes === 0) {
                 if (breakCount % 2 === 0) {
@@ -75,4 +74,9 @@ function timerFunction() {
     } else {
         updateTimerDisplay(parseInt(document.getElementById('minutes').innerHTML), seconds);
     }
+
+    // Update ring animation duration based on time left
+    let totalSeconds = parseInt(document.getElementById('minutes').textContent) * 60 + parseInt(document.getElementById('seconds').textContent);
+    let duration = totalSeconds + "s";
+    document.documentElement.style.setProperty('--timer-duration', duration);
 }
