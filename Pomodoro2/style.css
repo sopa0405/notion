@@ -3,11 +3,34 @@
 
     --color-primary: #191919;
     --color-secondary: #262626;
-    --color-glow: #ffffff; /* Change the color of the glow */
+    --color-glow: rgba(255, 255, 255, 0.2); /* Adjust glow color here */
     --color-font: hsla(0, 0%, 100%, 0.902);
 }
 
-/* ... rest of the CSS ... */
+body {
+    font-family: 'Open sans', sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-primary);
+    font-size: 1.6rem;
+}
+
+section {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.container {
+    width: min(42.5rem, 100%);
+    margin-inline: auto;
+    padding-inline: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 
 .painel button {
     opacity: 0.8;
@@ -20,6 +43,26 @@
     box-shadow: 0px 0px 10px 0px var(--color-glow); /* Add box-shadow to buttons */
 }
 
+.timer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30rem;
+    height: 30rem;
+    border-radius: 50%;
+    box-shadow: 0px 0px 15px 0px var(--color-glow); /* Add box-shadow to the timer */
+}
+
+.circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 26rem;
+    height: 26rem;
+    border-radius: 50%;
+    background-color: var(--color-secondary);
+    position: relative;
+}
 
 .circle::before {
     content: '';
@@ -40,12 +83,11 @@
 
 .time p {
     font-size: 5.6rem;
-    color: var(--color-font);
 }
 
 .time p:nth-of-type(2) {
     position: relative;
-    top: -0.5rem;
+    top: -.5rem;
     margin-inline: 1rem;
 }
 
@@ -54,22 +96,4 @@
 }
 
 .control-button {
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    font-size: 3.2rem;
-    color: var(--color-font);
-}
-
-.controls #reset {
-    display: none;
-}
-
-@keyframes rotateCircle {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
+    border: none
