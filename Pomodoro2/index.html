@@ -23,8 +23,8 @@
             <h1>pomodoro</h1>
 
             <div class="painel">
-                <button id="work" onclick="switchMode('work')">work</button>
-                <button id="break" onclick="switchMode('break')">break</button>
+                <button id="work" class="mode-button active" onclick="switchMode('work')">work</button>
+                <button id="break" class="mode-button" onclick="switchMode('break')">break</button>
             </div>
 
             <div class="timer">
@@ -38,9 +38,9 @@
             </div>
 
             <div class="controls">
-                <button id="start" onclick="startTimer()"><i class="fa-solid fa-play"></i></button>
-                <button id="stop" onclick="stopTimer()"><i class="fa-solid fa-pause"></i></button>
-                <a id="reset" href="javascript:resetTimer()"><i class="fa-solid fa-arrow-rotate-left"></i></a>
+                <button id="start" class="control-button" onclick="startTimer()"><i class="fa-solid fa-play"></i></button>
+                <button id="stop" class="control-button" onclick="stopTimer()"><i class="fa-solid fa-pause"></i></button>
+                <a id="reset" class="control-button" href="javascript:resetTimer()"><i class="fa-solid fa-arrow-rotate-left"></i></a>
             </div>
         </div>
     </section>
