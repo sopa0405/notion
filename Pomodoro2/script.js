@@ -1,53 +1,61 @@
-let timerInterval;
-let isTimerRunning = false;
-let breakCount = 0;
-
-let workTittle = document.getElementById('work');
-let breakTittle = document.getElementById('break');
-
 let workTime = 25;
 let breakTime = 5;
-
 let seconds = "00";
+let isTimerRunning = false;
+let timerInterval;
+let breakCount = 0;
 
 window.onload = () => {
     document.getElementById('minutes').innerHTML = workTime;
     document.getElementById('seconds').innerHTML = seconds;
-
-    workTittle.classList.add('active');
-}
+    switchMode('work');
+};
 
 function startTimer() {
     if (!isTimerRunning) {
         isTimerRunning = true;
-        document.getElementById('start').style.display = 'none';
-        document.getElementById('stop').style.display = 'block';
+        document.getElementById('start').style.display = "none";
+        document.getElementById('stop').style.display = "block";
         timerInterval = setInterval(timerFunction, 1000);
     }
 }
 
 function stopTimer() {
-    clearInterval(timerInterval);
     isTimerRunning = false;
-    document.getElementById('start').style.display = 'block';
-    document.getElementById('stop').style.display = 'none';
+    clearInterval(timerInterval);
+    document.getElementById('stop').style.display = "none";
+    document.getElementById('start').style.display = "block";
+}
+
+function resetTimer() {
+    isTimerRunning = false;
+    clearInterval(timerInterval);
+    document.getElementById('stop').style.display = "none";
+    document.getElementById('start').style.display = "block";
+    document.getElementById('minutes').innerHTML = workTime;
+    document.getElementById('seconds').innerHTML = "00";
+    switchMode('work');
 }
 
 function updateTimerDisplay(minutes, seconds) {
-    document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-    document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+    document.getElementById('minutes').innerHTML = minutes < 10 ? `0${minutes}` : minutes;
+    document.getElementById('seconds').innerHTML = seconds < 10 ? `0${seconds}` : seconds;
 }
 
 function switchMode(mode) {
     if (mode === 'work') {
-        workTittle.classList.add('active');
-        breakTittle.classList.remove('active');
+        workTime = 25;
+        breakTime = 5;
+        document.getElementById('work').classList.add('active');
+        document.getElementById('break').classList.remove('active');
     } else if (mode === 'break') {
-        breakTittle.classList.add('active');
-        workTittle.classList.remove('active');
+        workTime = 5;
+        breakTime = 25;
+        document.getElementById('break').classList.add('active');
+        document.getElementById('work').classList.remove('active');
     }
-    let modeTime = mode === 'work' ? workTime : breakTime;
-    updateTimerDisplay(modeTime, 0);
+    document.getElementById('minutes').innerHTML = workTime;
+    document.getElementById('seconds').innerHTML = "00";
 }
 
 function timerFunction() {
