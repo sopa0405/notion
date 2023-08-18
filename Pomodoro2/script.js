@@ -8,7 +8,7 @@ let breakTittle = document.getElementById('break');
 let workTime = 25;
 let breakTime = 5;
 
-let seconds = "00"
+let seconds = "00";
 
 window.onload = () => {
     document.getElementById('minutes').innerHTML = workTime;
@@ -57,4 +57,22 @@ function timerFunction() {
         if (workTime > 0 || breakTime > 0) {
             seconds = 59;
 
-            let minutes =
+            let minutes = document.getElementById('minutes').innerHTML;
+            minutes = parseInt(minutes);
+
+            if (minutes === 0) {
+                if (breakCount % 2 === 0) {
+                    switchMode('break');
+                } else {
+                    switchMode('work');
+                }
+                breakCount++;
+            }
+
+            minutes = minutes - 1;
+            updateTimerDisplay(minutes, seconds);
+        }
+    } else {
+        updateTimerDisplay(parseInt(document.getElementById('minutes').innerHTML), seconds);
+    }
+}
