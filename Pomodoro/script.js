@@ -33,8 +33,8 @@ function start() {
     // countdown
     let timerFunction = () => {
         //change the display
-        document.getElementById('minutes').innerHTML = workMinutes;
-        document.getElementById('seconds').innerHTML = seconds;
+        document.getElementById('minutes').innerHTML = formatTime(minutes);
+        document.getElementById('seconds').innerHTML = formatTime(seconds);
 
         // start
         seconds = seconds - 1;
@@ -66,4 +66,8 @@ function start() {
 
     // start countdown
     setInterval(timerFunction, 1000); // 1000 = 1s
+}
+
+function formatTime(time) {
+    return time.toString().padStart(2, '0');
 }
