@@ -1,16 +1,16 @@
 // variables
-
 let workTittle = document.getElementById('work');
 let breakTittle = document.getElementById('break');
 
 let workTime = 25;
 let breakTime = 5;
 
-let seconds = "00"
+let seconds = "00";
+let timerInterval;
 
-// display
+// set initial display
 window.onload = () => {
-    document.getElementById('minutes').innerHTML = workTime;
+    document.getElementById('minutes').innerHTML = formatTime(workTime);
     document.getElementById('seconds').innerHTML = seconds;
 
     workTittle.classList.add('active');
@@ -18,56 +18,36 @@ window.onload = () => {
 
 // start timer
 function start() {
-    // change button
     document.getElementById('start').style.display = "none";
+    document.getElementById('stop').style.display = "block";
     document.getElementById('reset').style.display = "block";
 
-    // change the time
+    clearInterval(timerInterval);
+
+    let minutes = parseInt(document.getElementById('minutes').innerHTML);
     seconds = 59;
 
-    let workMinutes = workTime - 1;
-    let breakMinutes = breakTime - 1;
-
-    breakCount = 0;
-
-    // countdown
-    let timerFunction = () => {
-        //change the display
-        document.getElementById('minutes').innerHTML = formatTime(minutes);
-        document.getElementById('seconds').innerHTML = formatTime(seconds);
-
-        // start
-        seconds = seconds - 1;
-
-        if(seconds === 0) {
-            workMinutes = workMinutes - 1;
-            if(workMinutes === -1 ){
-                if(breakCount % 2 === 0) {
-                    // start break
-                    workMinutes = breakMinutes;
-                    breakCount++
-
-                    // change the painel
-                    workTittle.classList.remove('active');
-                    breakTittle.classList.add('active');
-                }else {
-                    // continue work
-                    workMinutes = workTime;
-                    breakCount++
-
-                    // change the painel
-                    breakTittle.classList.remove('active');
-                    workTittle.classList.add('active');
+    timerInterval = setInterval(() => {
+        seconds--;
+        if (seconds < 0) {
+            minutes--;
+            if (minutes < 0) {
+                if (workTittle.classList.contains('active')) {
+                    setMode('break');
+                    minutes = breakTime;
+                } else if (breakTittle.classList.contains('active')) {
+                    setMode('work');
+                    minutes = workTime;
                 }
             }
             seconds = 59;
         }
-    }
-
-    // start countdown
-    setInterval(timerFunction, 1000); // 1000 = 1s
+        document.getElementById('minutes').innerHTML = formatTime(minutes);
+        document.getElementById('seconds').innerHTML = formatTime(seconds);
+    }, 1000);
 }
 
+// format time to display with leading zeros
 function formatTime(time) {
     return time.toString().padStart(2, '0');
 }
